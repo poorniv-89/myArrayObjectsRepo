@@ -1,0 +1,98 @@
+//Part 3: Feeling Loopy 
+console.log("--------------------part1 feeling loopy upgraded 2.0---------------------- ")
+// const str = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
+// let cells = []; //storing the data in an array
+// let cellVal = "";
+// let commas = 0;
+
+// for (let i = 0; i < str.length; i++) {
+//     if (str[i] === ',') {
+//         // if char is a comma, do this
+//         cells.push(cellVal);
+//         cellVal = "";
+//         commas++;
+//     } else if (str[i] === '\n') {
+//         //If char is a "\n", do this\
+//         cells.push(cellVal);
+//         console.log(cells[0],cells[1],cells[2],cells[3]);
+//         commas = 0;
+//         cellVal = "";
+//         cells = [];
+//     } else {
+//         // any other char
+//         if (commas == 0) {
+//             // if 0 commas
+//             cellVal += str[i];
+//         } else if (commas == 1) {
+//             // if 1 commas
+//             cellVal += str[i];
+//         } else if (commas == 2) {
+//             // if 2 commas
+//             cellVal += str[i];
+//         } else {
+//             // if 3 or more
+//             cellVal += str[i];
+//         }
+//     }
+
+//     if (i === str.length - 1) {
+//         cells.push(cellVal); // if index number is the same as length of string
+//         console.log(cells[0],cells[1],cells[2],cells[3]); //To dis
+//     }
+// }
+
+const str = "ID,Name,Occupation,Age,\n42,Bruce,Knight,41,\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
+let val = [];
+val = str.split("\n");
+let data = [];
+for(let row of val)
+{
+    data = row.split(",");
+    console.log(data.join (" "));
+    
+
+}
+
+console.log("----------------------------Part2 Expanding Functionality-----------------------------------------")
+let cellData = "";
+let commas1 = 0;
+let columns = []; // array to hold each celldata
+let rows = []; // array to hold the column array 
+
+for (i = 0; i < str.length; i++) {
+    if (str[i] === ',') {
+        columns.push(cellData); //pushes celldata to column array
+        cellData = "";
+        commas1++;
+    }
+    else if (str[i] === '\n') {
+        columns.push(cellData);
+        rows.push(columns); // pushes columns  to rows array 
+        columns = [];
+        cellData = "";
+        commas1 = 0;
+    }
+    else {
+        // any other char
+        if (commas1 == 0) {
+            // if 0 commas
+            cellData += str[i];
+        } else if (commas1 == 1) {
+            // if 1 commas
+            cellData += str[i];
+        } else if (commas1 == 2) {
+            // if 2 commas
+            cellData += str[i];
+        } else {
+            // if 3 or more
+            cellData += str[i];
+        }
+    }
+    if (i === str.length - 1) { //to push the last celldata to columns and column to rows
+        columns.push(cellData); 
+        rows.push(columns);
+    }
+}
+console.log(rows);
+
+
