@@ -1,45 +1,5 @@
 //Part 3: Feeling Loopy 
 console.log("--------------------part1 feeling loopy upgraded 2.0---------------------- ")
-// const str = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
-// let cells = []; //storing the data in an array
-// let cellVal = "";
-// let commas = 0;
-
-// for (let i = 0; i < str.length; i++) {
-//     if (str[i] === ',') {
-//         // if char is a comma, do this
-//         cells.push(cellVal);
-//         cellVal = "";
-//         commas++;
-//     } else if (str[i] === '\n') {
-//         //If char is a "\n", do this\
-//         cells.push(cellVal);
-//         console.log(cells[0],cells[1],cells[2],cells[3]);
-//         commas = 0;
-//         cellVal = "";
-//         cells = [];
-//     } else {
-//         // any other char
-//         if (commas == 0) {
-//             // if 0 commas
-//             cellVal += str[i];
-//         } else if (commas == 1) {
-//             // if 1 commas
-//             cellVal += str[i];
-//         } else if (commas == 2) {
-//             // if 2 commas
-//             cellVal += str[i];
-//         } else {
-//             // if 3 or more
-//             cellVal += str[i];
-//         }
-//     }
-
-//     if (i === str.length - 1) {
-//         cells.push(cellVal); // if index number is the same as length of string
-//         console.log(cells[0],cells[1],cells[2],cells[3]); //To dis
-//     }
-// }
 
 const str = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
 let val = [];
@@ -53,6 +13,7 @@ for (let row of val) {
 }
 
 console.log("----------------------------Part2 Expanding Functionality-----------------------------------------")
+
 let cellData = "";
 let commas1 = 0;
 let columns = []; // array to hold each celldata
@@ -98,9 +59,6 @@ console.log("------------------part 3Transforming data-------------");
 
 const rowObjects = [];
 const header = [];
-
-
-
 for (let i = 0; i < rows[0].length; i++) { //Getting the keys for heading
     header.push(rows[0][i].toLowerCase());
 }
@@ -114,21 +72,89 @@ for (let i = 1; i < rows.length; i++) {
 
 console.log(rowObjects);
 
-
 console.log("-------------------------Part 4: Sorting and Manipulating Data-----------------------------");
 
 rowObjects.pop(); //Removes the last element from the sorted array.
 console.log(rowObjects);
-rowObjects.splice(1,0,{ id: "48", name: "Barry", occupation: "Runner", age: "25" }); //inserting objects at index 1
-rowObjects.splice(rowObjects.length, 0 ,{ id: "7", name: "Bilbo", occupation: "None", age: "111" });//inserting objects to the end of the array
+rowObjects.splice(1, 0, { id: "48", name: "Barry", occupation: "Runner", age: "25" }); //inserting objects at index 1
+rowObjects.splice(rowObjects.length, 0, { id: "7", name: "Bilbo", occupation: "None", age: "111" });//inserting objects to the end of the array
 console.log(rowObjects);
 //Finding the average age of the group 
 let count = 0;
 let totalAge = 0;
-for ( let i =0; i<rowObjects.length; i++){
+for (let i = 0; i < rowObjects.length; i++) {
     let valueAge = parseInt(rowObjects[i].age);
     totalAge += valueAge;
     count++;
 }
-let averageAge = totalAge/count;
-console.log(`Total age of ${count} people is ${totalAge} and the average age is  ${averageAge}`);
+let averageAge = totalAge / count;
+console.log(`Total age of ${count} people is ${totalAge} and the average age is  ${averageAge}\n`);
+
+console.log("-----------------------Part 5: Full Circle------------------------------------------\n")
+
+const dataArray = [];
+for (let i = 0; i < rowObjects.length; i++) {
+
+    let tempArrayData = rowObjects[i];
+    dataArray.push(Object.entries(tempArrayData)); //pushing every object into an array
+
+}
+const finalArray = dataArray.flat(2); // flattening  the  3D array to one dimensional array
+let finalStr = "";
+let ageCounter = 1;
+let idCounter = 0;
+let nameCounter = 0;
+let occupationCounter = 0;
+let firstData ="";
+for (let i = 0; i < finalArray.length; i++) { //looping throught the final array to separate the columns
+    if (finalArray[i] == "id") {
+        
+        if (idCounter === 0) { //checking if the data is a header 
+            idCounter++; 
+            finalStr += finalArray[i]+",";
+            firstData += finalArray[i+1]+","; //adding the first row data to a temporary string variable
+        }
+        else{
+            finalStr += finalArray[i + 1] + ","; //adding the data to the final string if its not header or first row
+        }
+    }
+    else if (finalArray[i] === "name") {
+        if (nameCounter === 0) {
+            nameCounter++;
+            finalStr += finalArray[i]+",";
+            firstData +=finalArray[i+1]+",";
+        }
+        else {
+            finalStr += finalArray[i + 1] + ",";
+        }
+    }
+    else if (finalArray[i] === "occupation") {
+        if (occupationCounter === 0) {
+            occupationCounter++;
+            finalStr += finalArray[i]+",";
+            firstData +=finalArray[i+1]+",";
+        }
+        else {
+            finalStr += finalArray[i + 1] + ",";
+        }
+    }
+    else if (finalArray[i] === "age") {
+        if (ageCounter === 1) {
+            ageCounter++;
+            finalStr += finalArray[i]+"\\n"; //adding new line character to mark the end of line
+            firstData += finalArray[i+1];
+            finalStr +=firstData+"\\n";
+        }
+        else if (finalArray[i] === "age" && ageCounter < rowObjects.length) { //checking the length to see if \n to be added or not
+            finalStr += finalArray[i + 1];
+            finalStr += "\\n";
+            ageCounter++;
+        }
+        else {
+            finalStr += finalArray[i + 1];
+        }
+    }
+
+}
+
+console.log(`The final data in CSV format is: ${finalStr}`);
