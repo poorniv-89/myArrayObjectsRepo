@@ -105,7 +105,7 @@ for (let i = 0; i < rows[0].length; i++) { //Getting the keys for heading
     header.push(rows[0][i].toLowerCase());
 }
 for (let i = 1; i < rows.length; i++) {
-    const objectData = {};
+    const objectData = {}; //creating a new object for every row
     for (let j = 0; j < rows[i].length; j++) {
         objectData[header[j]] = rows[i][j];
     }
@@ -116,3 +116,19 @@ console.log(rowObjects);
 
 
 console.log("-------------------------Part 4: Sorting and Manipulating Data-----------------------------");
+
+rowObjects.pop(); //Removes the last element from the sorted array.
+console.log(rowObjects);
+rowObjects.splice(1,0,{ id: "48", name: "Barry", occupation: "Runner", age: "25" }); //inserting objects at index 1
+rowObjects.splice(rowObjects.length, 0 ,{ id: "7", name: "Bilbo", occupation: "None", age: "111" });//inserting objects to the end of the array
+console.log(rowObjects);
+//Finding the average age of the group 
+let count = 0;
+let totalAge = 0;
+for ( let i =0; i<rowObjects.length; i++){
+    let valueAge = parseInt(rowObjects[i].age);
+    totalAge += valueAge;
+    count++;
+}
+let averageAge = totalAge/count;
+console.log(`Total age of ${count} people is ${totalAge} and the average age is  ${averageAge}`);
