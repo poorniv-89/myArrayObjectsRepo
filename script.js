@@ -41,15 +41,14 @@ console.log("--------------------part1 feeling loopy upgraded 2.0---------------
 //     }
 // }
 
-const str = "ID,Name,Occupation,Age,\n42,Bruce,Knight,41,\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
+const str = "ID,Name,Occupation,Age\n42,Bruce,Knight,41\n57,Bob,Fry Cook,19\n63,Blaine,Quiz Master,58\n98,Bill,Doctor’s Assistant,26";
 let val = [];
 val = str.split("\n");
 let data = [];
-for(let row of val)
-{
+for (let row of val) {
     data = row.split(",");
-    console.log(data.join (" "));
-    
+    console.log(data.join(" "));
+
 
 }
 
@@ -89,10 +88,31 @@ for (i = 0; i < str.length; i++) {
         }
     }
     if (i === str.length - 1) { //to push the last celldata to columns and column to rows
-        columns.push(cellData); 
+        columns.push(cellData);
         rows.push(columns);
     }
 }
 console.log(rows);
 
+console.log("------------------part 3Transforming data-------------");
 
+const rowObjects = [];
+const header = [];
+
+
+
+for (let i = 0; i < rows[0].length; i++) { //Getting the keys for heading
+    header.push(rows[0][i].toLowerCase());
+}
+for (let i = 1; i < rows.length; i++) {
+    const objectData = {};
+    for (let j = 0; j < rows[i].length; j++) {
+        objectData[header[j]] = rows[i][j];
+    }
+    rowObjects.push(objectData);  //Adding the objects array in an array
+}
+
+console.log(rowObjects);
+
+
+console.log("-------------------------Part 4: Sorting and Manipulating Data-----------------------------");
